@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Visita Sindical</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f2fe; /* Azul muy claro (cielo) para el fondo general */
+            color: #1e293b; /* Un gris azulado oscuro para el texto general */
+            margin: 0;
+            padding: 15px; /* Añadido padding para que el contenedor no pegue a los bordes en móvil */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(145deg, #ffffff, #f0f7ff); /* Gradiente sutil para el contenedor */
+            border-radius: 16px; /* Bordes más redondeados */
+            box-shadow: 0 15px 35px rgba(0, 87, 158, 0.15), 0 5px 15px rgba(0,0,0,0.07); /* Sombra más pronunciada y azulada */
+            margin: 20px 0; /* Ajustado margen */
+            padding: 25px 30px; /* Mayor padding interno */
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #00a0e0; /* Azul Coppel claro */
+        }
+
+        .header-logo {
+            max-width: 280px; /* Ajustado para el logo rectangular */
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px; /* Opcional, si quieres bordes redondeados para la imagen */
+            display: block; /* Para permitir centrado con margin auto */
+            margin-left: auto; /* Centrar el logo */
+            margin-right: auto; /* Centrar el logo */
+        }
+
+        h1 {
+            color: #1e3a8a; /* Azul oscuro Coppel */
+            font-size: 1.9em; /* Ligeramente más grande */
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e3a8a;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px; /* Mayor padding */
+            border: 1px solid #b0c4de; /* Borde azulado claro */
+            border-radius: 10px; /* Bordes más redondeados */
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #334155;
+            background-color: #f8fafc; /* Fondo del input ligeramente gris */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0077cc; /* Azul medio al enfocar */
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.15);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .radio-group label {
+            margin-right: 15px;
+            font-weight: 500; /* Ligeramente más grueso */
+            color: #334155;
+        }
+        .radio-group input[type="radio"] {
+            margin-right: 6px;
+            accent-color: #0077cc; /* Azul medio para el radio */
+            transform: scale(1.1); /* Ligeramente más grande */
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px; /* Mayor padding */
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15em;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Transición para todos los props */
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background-color: #00a0e0; /* Azul Coppel claro */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0088c6; /* Azul Coppel un poco más oscuro */
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 160, 224, 0.3);
+        }
+        .btn-primary:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(0, 160, 224, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: #1e3a8a; /* Azul Coppel oscuro */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #162b65;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+        }
+         .btn-secondary:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(30, 58, 138, 0.2);
+        }
+
+
+        .hidden {
+            display: none !important; /* Asegurar que se oculte */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 160, 224, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(0, 160, 224, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 160, 224, 0.2); }
+        }
+        .btn-animated {
+            animation: pulse 2.5s infinite ease-in-out;
+        }
+
+        #capturedImageContainer img, #videoFeed {
+            width: 100%; /* Asegurar que ocupe todo el ancho disponible */
+            max-width: 100%;
+            height: auto; /* Mantener proporción */
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 3px dashed #00a0e0; /* Borde más grueso y azul claro */
+            background-color: #f0f8ff; /* Fondo azulado muy claro para el preview */
+        }
+        #videoFeed.hidden {
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+        .modal-body {
+            font-size: 1em;
+            color: #334155;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .modal-button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .modal-button.confirm {
+            background-color: #00a0e0;
+            color: white;
+        }
+        .modal-button.confirm:hover {
+            background-color: #007bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://github.com/juanbls100/Visitas360/blob/main/Rectangular%20lejano%20fondo%20blanco%20.jpeg?raw=true" 
+                 alt="Logo Sindicato Financiero Rectangular" 
+                 class="header-logo"
+                 onerror="this.onerror=null; this.src='https://placehold.co/280x70/e9ecef/0077cc?text=Logo+Superior'; this.alt='Error al cargar logo superior';">
+            <h1>Registro de Visita Sindical</h1>
+        </div>
+
+        <form id="visitForm">
+            <div class="form-group">
+                <label for="empresa">Empresa:</label>
+                <select id="empresa" name="empresa" required>
+                    <option value="">Seleccione una empresa</option>
+                    <option value="Bancoppel">Bancoppel</option>
+                    <option value="Afore Coppel">Afore Coppel</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" name="estado" required placeholder="Ej: Ciudad de México">
+            </div>
+
+            <div class="form-group">
+                <label for="region">Región:</label>
+                <select id="region" name="region" required>
+                    <option value="">Seleccione una región</option>
+                    <option value="AZCP">AZCP</option>
+                    <option value="CDJZ">CDJZ</option>
+                    <option value="CTLZ">CTLZ</option>
+                    <option value="CLCN">CLCN</option>
+                    <option value="GPLC">GPLC</option>
+                    <option value="GDLJ I">GDLJ I</option>
+                    <option value="GDLJ II">GDLJ II</option>
+                    <option value="HLLO">HLLO</option>
+                    <option value="IXTP">IXTP</option>
+                    <option value="IZTP">IZTP</option>
+                    <option value="LEON">LEON</option>
+                    <option value="LMCH">LMCH</option>
+                    <option value="MRDA">MRDA</option>
+                    <option value="MXLI">MXLI</option>
+                    <option value="MTRY I">MTRY I</option>
+                    <option value="MTRY II">MTRY II</option>
+                    <option value="OAXC">OAXC</option>
+                    <option value="PBLA">PBLA</option>
+                    <option value="SNLP">SNLP</option>
+                    <option value="TCMC">TCMC</option>
+                    <option value="TXCC">TXCC</option>
+                    <option value="TOLC">TOLC</option>
+                    <option value="VRCZ">VRCZ</option>
+                    <option value="VLHM">VLHM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sucursal">Sucursal:</label>
+                <select id="sucursal" name="sucursal" required>
+                    <option value="">Seleccione una sucursal</option>
+                    <option value="189 Coacalco">189 Coacalco</option>
+                    <option value="190 San Lorenzo">190 San Lorenzo</option>
+                    <option value="194 Plaza del Valle">194 Plaza del Valle</option>
+                    <option value="200 Valle">200 Valle</option>
+                    <option value="221 Victoria">221 Victoria</option>
+                    <option value="228 Morelos">228 Morelos</option>
+                    <option value="261 Los Héroes">261 Los Héroes</option>
+                    <option value="290 Del Rosal">290 Del Rosal</option>
+                    <option value="293 21 de marzo">293 21 de marzo</option>
+                    <option value="319 Plaza Universidad">319 Plaza Universidad</option>
+                    <option value="349 5 de Mayo">349 5 de Mayo</option>
+                    <option value="366 Cabrera">366 Cabrera</option>
+                    <option value="389 Gustavo Baz">389 Gustavo Baz</option>
+                    <option value="401 Las Villas">401 Las Villas</option>
+                    <option value="402 Juárez">402 Juárez</option>
+                    <option value="403 Progreso">403 Progreso</option>
+                    <option value="405 San Cristóbal">405 San Cristóbal</option>
+                    <option value="407 Central">407 Central</option>
+                    <option value="433 Hidalgo">433 Hidalgo</option>
+                    <option value="451 Recursos">451 Recursos</option>
+                    <option value="472 Chapultepec">472 Chapultepec</option>
+                    <option value="476 Sendero">476 Sendero</option>
+                    <option value="480 Pabellón">480 Pabellón</option>
+                    <option value="506 Plaza Ixmiquilpan">506 Plaza Ixmiquilpan</option>
+                    <option value="574 Ocampo">574 Ocampo</option>
+                    <option value="575 Hidalgo">575 Hidalgo</option>
+                    <option value="703 Ozumbilla">703 Ozumbilla</option>
+                    <option value="714 Palomas">714 Palomas</option>
+                    <option value="733 Plaza Bonita">733 Plaza Bonita</option>
+                    <option value="734 Guerrero">734 Guerrero</option>
+                    <option value="749 Bosques">749 Bosques</option>
+                    <option value="771 Constitución">771 Constitución</option>
+                    <option value="781 Actopan">781 Actopan</option>
+                    <option value="816 Carranza">816 Carranza</option>
+                    <option value="819 Villa de Las Flores">819 Villa de Las Flores</option>
+                    <option value="825 Madero">825 Madero</option>
+                    <option value="827 Tecnológico">827 Tecnológico</option>
+                    <option value="833 Allende">833 Allende</option>
+                    <option value="862 Ojo de Agua">862 Ojo de Agua</option>
+                    <option value="881 Plaza Zumpango">881 Plaza Zumpango</option>
+                    <option value="981 San Andrés">981 San Andrés</option>
+                    <option value="1000 Zaragoza">1000 Zaragoza</option>
+                    <option value="1110 Zaragoza">1110 Zaragoza</option>
+                    <option value="1129 Colegio Militar">1129 Colegio Militar</option>
+                    <option value="1194 Juárez">1194 Juárez</option>
+                    <option value="1219 Canadá Mexipuerto">1219 Canadá Mexipuerto</option>
+                    <option value="1249 Hidalgo">1249 Hidalgo</option>
+                    <option value="1367 Las Huertas">1367 Las Huertas</option>
+                    <option value="1430 Las Flores">1430 Las Flores</option>
+                    <option value="1432 Plaza Aragon">1432 Plaza Aragon</option>
+                    <option value="1434 Patio tulancingo">1434 Patio tulancingo</option>
+                    <option value="1438 Gran Patio">1438 Gran Patio</option>
+                    <option value="1449 Cerro Gordo">1449 Cerro Gordo</option>
+                    <option value="1470 Montaño">1470 Montaño</option>
+                    <option value="1491 Sahagún">1491 Sahagún</option>
+                    <option value="1496 16 de Septiembre">1496 16 de Septiembre</option>
+                    <option value="6531 Sierra Hermosa">6531 Sierra Hermosa</option>
+                    <option value="6567 Francisco Cosio">6567 Francisco Cosio</option>
+                    <option value="6590 Paseo Ventura">6590 Paseo Ventura</option>
+                    <option value="7637 Chiconautla">7637 Chiconautla</option>
+                    <option value="7640 Zaragoza">7640 Zaragoza</option>
+                    <option value="7651 Bonfil">7651 Bonfil</option>
+                    <option value="7655 Power Center Tecamac">7655 Power Center Tecamac</option>
+                    <option value="7657 Explanada Pachuca">7657 Explanada Pachuca</option>
+                    <option value="7677 Plaza Ecatepec">7677 Plaza Ecatepec</option>
+                    <option value="7680 5 Oriente">7680 5 Oriente</option>
+                    <option value="7686 Acolman">7686 Acolman</option>
+                    <option value="7733 Plaza Tizara">7733 Plaza Tizara</option>
+                    <option value="7806 Plaza Las Américas">7806 Plaza Las Américas</option>
+                    <option value="7813 Guerrero">7813 Guerrero</option>
+                    <option value="7857 Las Brisas">7857 Las Brisas</option>
+                    <option value="7892 Cosmopol">7892 Cosmopol</option>
+                    <option value="7858 Paseos del bosque">7858 Paseos del bosque</option>
+                    <option value="7750 Felipe Angeles">7750 Felipe Angeles</option>
+                    <option value="7927 Villa Lázaro Cardenas">7927 Villa Lázaro Cardenas</option>
+                    <option value="7850 La Providencia">7850 La Providencia</option>
+                    <option value="7797 Real del Valle">7797 Real del Valle</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreAgremiado">Nombre del agremiado:</label>
+                <select id="nombreAgremiado" name="nombreAgremiado" required>
+                    <option value="">Seleccione primero una empresa</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>¿Se realizó plática?</label>
+                <div class="radio-group">
+                    <input type="radio" id="platicaSi" name="realizoPlatica" value="si" required> <label for="platicaSi">Sí</label>
+                    <input type="radio" id="platicaNo" name="realizoPlatica" value="no"> <label for="platicaNo">No</label>
+                </div>
+            </div>
+
+            <div id="razonNoPlaticaGroup" class="form-group hidden">
+                <label for="razonNoPlatica">Razón (si no se realizó plática):</label>
+                <select id="razonNoPlatica" name="razonNoPlatica">
+                    <option value="">Seleccione una razón</option>
+                    <option value="Descanso">Descanso</option>
+                    <option value="Vacaciones">Vacaciones</option>
+                    <option value="Incapacidad">Incapacidad</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <div id="reportoSituacionGroup" class="form-group hidden">
+                <label>¿Reportó situación?</label>
+                <div class="radio-group">
+                    <input type="radio" id="reportoSi" name="reportoSituacion" value="si"> <label for="reportoSi">Sí</label>
+                    <input type="radio" id="reportoNo" name="reportoSituacion" value="no"> <label for="reportoNo">No</label>
+                </div>
+            </div>
+
+            <div id="tipoSituacionGroup" class="form-group hidden">
+                <label for="tipoSituacion">Tipo de situación:</label>
+                <select id="tipoSituacion" name="tipoSituacion">
+                    <option value="">Seleccione tipo de situación</option>
+                    <option value="Cambios de Centro">Cambios de Centro</option>
+                    <option value="Capacitación">Capacitación</option>
+                    <option value="Clima laboral">Clima laboral</option>
+                    <option value="Crecimiento">Crecimiento</option>
+                    <option value="Descansos">Descansos</option>
+                    <option value="Despidos y/o renuncias">Despidos y/o renuncias</option>
+                    <option value="Faltantes y cobros">Faltantes y cobros</option>
+                    <option value="Faltas y/o permisos">Faltas y/o permisos</option>
+                    <option value="Incentivos">Incentivos</option>
+                    <option value="Instalaciones">Instalaciones</option>
+                    <option value="Jornada laboral">Jornada laboral</option>
+                    <option value="Operación y desarrollo de actividades">Operación y desarrollo de actividades</option>
+                    <option value="Otras prestaciones">Otras prestaciones</option>
+                    <option value="Otros">Otros</option>
+                    <option value="Nivelación de sueldo de acuerdo al puesto">Nivelación de sueldo de acuerdo al puesto</option>
+                    <option value="Uniformes">Uniformes</option>
+                    <option value="Utilidades">Utilidades</option>
+                    <option value="Vacaciones">Vacaciones</option>
+                </select>
+            </div>
+
+            <div id="detalleSituacionGroup" class="form-group hidden">
+                <label for="detalleSituacion">Detalle de la situación:</label>
+                <textarea id="detalleSituacion" name="detalleSituacion" placeholder="Describa la situación detalladamente..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="observaciones">Observaciones:</label>
+                <textarea id="observaciones" name="observaciones" placeholder="Observaciones generales de la visita..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <button type="button" id="btnOpenCamera" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-camera-fill inline-block mr-2 align-middle" viewBox="0 0 16 16">
+                        <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                    </svg>
+                    Tomar Fotografía
+                </button>
+                <video id="videoFeed" class="hidden" autoplay playsinline></video>
+                <canvas id="photoCanvas" class="hidden"></canvas>
+                <div id="capturedImageContainer">
+                    </div>
+                <input type="hidden" id="capturedImageData" name="capturedImageData">
+            </div>
+            
+            <button type="submit" id="btnFinalizarVisita" class="btn btn-primary btn-animated">Finalizar Visita</button>
+        </form>
+        </div>
+
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="modal-title">Título del Modal</h3>
+            <p id="modalBody" class="modal-body">Contenido del modal...</p>
+            <button id="modalCloseButton" class="modal-button confirm">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        // Nombres de agremiados (ejemplos)
+        const agremiadosData = {
+            "Bancoppel": [
+                "Juan Pérez López", "María García Hernández", "Carlos Rodríguez Martínez", "Ana Fernández González",
+                "José Sánchez Ramírez", "Laura Torres Flores", "Pedro Gómez Vázquez", "Sofía Jiménez Reyes",
+                "Miguel Cruz Castillo", "Elena Morales Ortega", "David Mendoza Ruiz", "Patricia Herrera Silva"
+            ],
+            "Afore Coppel": [
+                "Roberto Aguilar Soto", "Gabriela Castro Paredes"
+            ]
+        };
+
+        const empresaSelect = document.getElementById('empresa');
+        const nombreAgremiadoSelect = document.getElementById('nombreAgremiado');
+        
+        const platicaRadios = document.querySelectorAll('input[name="realizoPlatica"]');
+        const razonNoPlaticaGroup = document.getElementById('razonNoPlaticaGroup');
+        const reportoSituacionGroup = document.getElementById('reportoSituacionGroup');
+        
+        const reportoSituacionRadios = document.querySelectorAll('input[name="reportoSituacion"]');
+        const tipoSituacionGroup = document.getElementById('tipoSituacionGroup');
+        const detalleSituacionGroup = document.getElementById('detalleSituacionGroup');
+
+        const form = document.getElementById('visitForm');
+
+        // Elementos de la cámara
+        const btnOpenCamera = document.getElementById('btnOpenCamera');
+        const videoFeed = document.getElementById('videoFeed');
+        const photoCanvas = document.getElementById('photoCanvas');
+        const capturedImageContainer = document.getElementById('capturedImageContainer');
+        const capturedImageDataInput = document.getElementById('capturedImageData');
+        let stream = null;
+
+        // Elementos del Modal
+        const customModal = document.getElementById('customModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+
+        function showModal(title, message) {
+            modalTitle.textContent = title;
+            modalBody.textContent = message;
+            customModal.classList.add('active');
+        }
+
+        modalCloseButton.addEventListener('click', () => {
+            customModal.classList.remove('active');
+        });
+        // Cerrar modal al hacer clic fuera del contenido (en el overlay)
+        customModal.addEventListener('click', (event) => {
+            if (event.target === customModal) {
+                customModal.classList.remove('active');
+            }
+        });
+
+
+        // Cargar agremiados según la empresa seleccionada
+        empresaSelect.addEventListener('change', function() {
+            const selectedEmpresa = this.value;
+            nombreAgremiadoSelect.innerHTML = '<option value="">Seleccione un agremiado</option>'; // Reset
+            
+            if (selectedEmpresa && agremiadosData[selectedEmpresa]) {
+                agremiadosData[selectedEmpresa].forEach(nombre => {
+                    const option = document.createElement('option');
+                    option.value = nombre;
+                    option.textContent = nombre;
+                    nombreAgremiadoSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Lógica para mostrar/ocultar campos condicionales
+        platicaRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const razonSelect = document.getElementById('razonNoPlatica');
+                const reportoSituacionSi = document.getElementById('reportoSi');
+                const reportoSituacionNo = document.getElementById('reportoNo');
+                const tipoSituacionSelect = document.getElementById('tipoSituacion');
+
+                if (this.value === 'si') {
+                    razonNoPlaticaGroup.classList.add('hidden');
+                    razonSelect.removeAttribute('required');
+                    reportoSituacionGroup.classList.remove('hidden');
+                    // No hacer required los radios de reportoSituacion aquí, se maneja en su propio listener
+                } else if (this.value === 'no') {
+                    razonNoPlaticaGroup.classList.remove('hidden');
+                    razonSelect.setAttribute('required', 'required');
+                    
+                    reportoSituacionGroup.classList.add('hidden');
+                    reportoSituacionSi.checked = false; // Desmarcar
+                    reportoSituacionNo.checked = false; // Desmarcar
+                    reportoSituacionSi.removeAttribute('required');
+                    reportoSituacionNo.removeAttribute('required');
+
+
+                    tipoSituacionGroup.classList.add('hidden');
+                    tipoSituacionSelect.removeAttribute('required');
+                    detalleSituacionGroup.classList.add('hidden');
+                }
+            });
+        });
+
+        reportoSituacionRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const tipoSituacionSelect = document.getElementById('tipoSituacion');
+                if (this.value === 'si') {
+                    tipoSituacionGroup.classList.remove('hidden');
+                    tipoSituacionSelect.setAttribute('required', 'required');
+                    detalleSituacionGroup.classList.remove('hidden'); // Detalle es opcional, no required
+                } else if (this.value === 'no') {
+                    tipoSituacionGroup.classList.add('hidden');
+                    tipoSituacionSelect.removeAttribute('required');
+                    detalleSituacionGroup.classList.add('hidden');
+                }
+            });
+        });
+
+        // Funcionalidad de la cámara
+        btnOpenCamera.addEventListener('click', async () => {
+            if (stream) { 
+                takePicture();
+                stopCamera();
+                btnOpenCamera.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-camera-fill inline-block mr-2 align-middle" viewBox="0 0 16 16">
+                        <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                    </svg>
+                    Tomar Fotografía`;
+                return;
+            }
+
+            try {
+                // Cambiado a 'user' para preferir la cámara frontal
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                videoFeed.srcObject = stream;
+                videoFeed.classList.remove('hidden'); // Mostrar el stream de video
+                capturedImageContainer.innerHTML = ''; 
+                capturedImageDataInput.value = '';
+                btnOpenCamera.textContent = 'Capturar Foto';
+            } catch (err) {
+                console.error("Error al acceder a la cámara: ", err);
+                showModal("Error de Cámara", "No se pudo acceder a la cámara. Asegúrate de haber otorgado los permisos necesarios y que tu dispositivo cuente con una cámara funcional. Error: " + err.message);
+            }
+        });
+
+        function takePicture() {
+            if (!stream || !videoFeed.srcObject) {
+                 showModal("Error de Captura", "No hay señal de video para capturar la foto.");
+                 return;
+            }
+            // Asegurarse que el video está reproduciendo para obtener dimensiones correctas
+            if (videoFeed.readyState < videoFeed.HAVE_CURRENT_DATA) {
+                showModal("Error de Captura", "El video aún no está listo. Intenta de nuevo.");
+                return;
+            }
+
+
+            const context = photoCanvas.getContext('2d');
+            photoCanvas.width = videoFeed.videoWidth;
+            photoCanvas.height = videoFeed.videoHeight;
+            context.drawImage(videoFeed, 0, 0, photoCanvas.width, photoCanvas.height);
+            
+            const imageDataURL = photoCanvas.toDataURL('image/jpeg', 0.85); // Calidad 0.85
+            
+            const imgElement = document.createElement('img');
+            imgElement.src = imageDataURL;
+            capturedImageContainer.innerHTML = ''; 
+            capturedImageContainer.appendChild(imgElement);
+            capturedImageDataInput.value = imageDataURL; 
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                videoFeed.srcObject = null; // Limpiar srcObject
+                videoFeed.classList.add('hidden');
+                stream = null;
+            }
+        }
+
+        // Manejo del envío del formulario
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            stopCamera(); // Detener la cámara si está activa
+            btnOpenCamera.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-camera-fill inline-block mr-2 align-middle" viewBox="0 0 16 16">
+                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                    <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"/>
+                </svg>
+                Tomar Fotografía`;
+
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            console.log("Datos del formulario:", data); // Aquí enviarías 'data' al servidor
+            
+            showModal('¡Éxito!', 'Visita registrada correctamente.');
+
+            form.reset(); 
+            nombreAgremiadoSelect.innerHTML = '<option value="">Seleccione primero una empresa</option>';
+            razonNoPlaticaGroup.classList.add('hidden');
+            document.getElementById('razonNoPlatica').removeAttribute('required');
+            reportoSituacionGroup.classList.add('hidden');
+             document.querySelectorAll('input[name="reportoSituacion"]').forEach(r => {
+                r.removeAttribute('required');
+                r.checked = false;
+            });
+            tipoSituacionGroup.classList.add('hidden');
+            document.getElementById('tipoSituacion').removeAttribute('required');
+            detalleSituacionGroup.classList.add('hidden');
+            capturedImageContainer.innerHTML = ''; 
+            capturedImageDataInput.value = '';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica inicial para asegurar que los campos condicionales estén correctamente ocultos/requeridos.
+            const platicaSeleccionada = document.querySelector('input[name="realizoPlatica"]:checked');
+            if (platicaSeleccionada) {
+                if (platicaSeleccionada.value === 'si') {
+                    razonNoPlaticaGroup.classList.add('hidden');
+                    reportoSituacionGroup.classList.remove('hidden');
+                    const reportoSituacionSeleccionada = document.querySelector('input[name="reportoSituacion"]:checked');
+                    if (reportoSituacionSeleccionada && reportoSituacionSeleccionada.value === 'si') {
+                        tipoSituacionGroup.classList.remove('hidden');
+                        detalleSituacionGroup.classList.remove('hidden');
+                    } else {
+                        tipoSituacionGroup.classList.add('hidden');
+                        detalleSituacionGroup.classList.add('hidden');
+                    }
+                } else { // 'no'
+                    razonNoPlaticaGroup.classList.remove('hidden');
+                    reportoSituacionGroup.classList.add('hidden');
+                    tipoSituacionGroup.classList.add('hidden');
+                    detalleSituacionGroup.classList.add('hidden');
+                }
+            } else { // Ninguno seleccionado inicialmente
+                razonNoPlaticaGroup.classList.add('hidden');
+                reportoSituacionGroup.classList.add('hidden');
+                tipoSituacionGroup.classList.add('hidden');
+                detalleSituacionGroup.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
